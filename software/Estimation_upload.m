@@ -39,7 +39,7 @@ fprintf('\nEstimated software size (S-Calc) = %.2f MB\n', Size_calc);
 disp('Use this size for upload time over provided bandwidth?');
 S_Choice = input('1 for Yes, 2 for no');
 if S_Choice == 1
-    File_size = S_choice
+    File_size = S_Choice
 else
     File_size = input ('Insert your software size');
 % otherwise
