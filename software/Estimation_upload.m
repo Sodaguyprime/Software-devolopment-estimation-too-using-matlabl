@@ -5,15 +5,16 @@ clear;
 % Inputs
 LOC = input('Enter estimated lines of code (LOC): ');
 disp('Select project type:      1-Organic    2-Semi-detached    3-Embedded');
-projectType = input('Enter project type number: ');
+projectType = str2double(ValidateInput({'1','2','3'}, 'Enter project type number: '));
+
 
 % Calculate Size
-Size_calc = calculateSize(LOC);
+Size_calc = calculateSize(abs(LOC));
 
 % COCOMO Estimation
-[effort, duration, TeamSize, KLOC] = cocomoEstimation(LOC, projectType);
+[effort, duration, TeamSize, KLOC] = cocomoEstimation(abs(LOC), projectType);
 
-%               Assigning strings based on the project selection type
+%  Assigning strings based on the project selection type
 switch projectType
     case 1
         projectType = 'Organic';
@@ -28,21 +29,21 @@ end
 
 
 % Upload Size Decision
-Next_choise = input('would you like to calculate the upload time over provided bandwidth?, Enter 1 for yes and 2 for no:  ');
+Next_choise = str2double(ValidateInput({'1','2'}, 'Would you like to calculate the upload time? 1 for yes, 2 for no: '));
 
 % This section determines the size of the software and wether or not to
 % calculate the upload time.
 if Next_choise == 1
     fprintf('\nEstimated software size (S-Calc) = %.2f MB\n', Size_calc); %prints the size of the Software
     disp('Use this size for upload time over provided bandwidth?'); 
-    S_Choice = input('1 for Yes, 2 for No: ');
+    S_Choice = str2double(ValidateInput({'1','2'}, '1 for Yes, 2 for No: '));
     if S_Choice == 1
         File_size = Size_calc;
     else
         File_size = input('Insert your software size in MB: ');
     end
     bandwidth = input('Enter internet speed in Mbps: ');
-    [uploadtime, TimMin] = calculateUploadTime(File_size, bandwidth);
+    [uploadtime, TimMin] = calculateUploadTime(abs(File_size), abs(bandwidth));
     fprintf('Estimated Upload Time: %.2f Minutes (%.2f Seconds)\n', TimMin, uploadtime);
     Software.TimeMin = TimMin;  
 else
@@ -61,7 +62,7 @@ Software.type = projectType;
 Software.timestamp = datestr(now, 'yyyy-mm-dd HH:MM:SS');
 
 % Writing to an output excel file
-writingandreading(Software, 'Records.xlsx');
+writingxls(Software, 'Records.xlsx');
 
 disp('Data has been recorded in output.xls');
 end
