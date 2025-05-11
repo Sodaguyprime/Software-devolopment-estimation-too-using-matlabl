@@ -1,4 +1,4 @@
-function Estimation_upload()
+
 clc;
 clear;
 
@@ -64,5 +64,9 @@ Software.timestamp = datestr(now, 'yyyy-mm-dd HH:MM:SS');
 % Writing to an output excel file
 writingxls(Software, 'Records.xlsx');
 
-disp('Data has been recorded in output.xls');
+disp('Data has been recorded in Records.xls');
+plotting_choice = input('Do you want to plot the FileSize + upload info ? 1- yes 2-no');
+if (plotting_choice == 1)
+    ResultPlot(File_size);
 end
+
