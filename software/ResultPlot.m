@@ -1,6 +1,11 @@
 function ResultPlot(fileSize)
 BW = 1:1:100; %Bandwidth
 UploadTime = (fileSize * 8) ./ BW / 60;
+minTime = min(UploadTime);
+maxTime = max(UploadTime);
+
+disp(['Minimum Upload Time: ', num2str(minTime), ' minutes']);
+disp(['Maximum Upload Time: ', num2str(maxTime), ' minutes']);
 
 f2 = figure;
 %for semilogy: 
